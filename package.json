@@ -9,6 +9,8 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "slate": "^0.66.5",
+    "slate-react": "^0.67.0",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
