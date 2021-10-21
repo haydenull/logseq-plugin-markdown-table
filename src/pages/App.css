@@ -1,0 +1,22 @@
+table, th, td {
+  @apply border;
+  @apply border-gray-200;
+}
+table{
+  border-collapse: collapse;
+  width: 100%;
+  overflow: hidden;
+  @apply shadow-md;
+  @apply table-auto;
+  @apply rounded-md;
+}
+td {
+  padding: 10px;
+}
+
+tr:nth-child(odd) {
+  @apply bg-gray-300;
+}
+tr:nth-child(even) {
+  @apply bg-gray-50;
+}
