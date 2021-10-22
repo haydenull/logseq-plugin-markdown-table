@@ -1,6 +1,6 @@
 import { useSlate } from 'slate-react'
 import { InsertRowAboveOutlined, InsertRowBelowOutlined, InsertRowLeftOutlined, InsertRowRightOutlined, DeleteRowOutlined, DeleteColumnOutlined } from '@ant-design/icons'
-import { Tooltip, Button } from 'antd'
+import { Tooltip } from 'antd'
 
 import { TableUtil } from '../utils/table'
 

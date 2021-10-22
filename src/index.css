@@ -16,7 +16,12 @@ code {
     monospace;
 } */
 
-body {
+/* body {
   @apply px-8 py-4;
   @apply bg-gray-100;
+} */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
 }

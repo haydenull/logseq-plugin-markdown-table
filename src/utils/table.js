@@ -1,4 +1,5 @@
-import { Transforms, Editor, Range, Element } from "slate";
+import { Transforms, Editor, Range, Element } from "slate"
+import { createTableNode } from "./util"
 
 export class TableUtil {
   constructor(editor) {
@@ -133,25 +134,4 @@ export class TableUtil {
       }
     }
   };
-}
-
-const createRow = (cellText) => {
-  const newRow = Array.from(cellText, (value) => createTableCell(value));
-  return {
-    type: "table-row",
-    children: newRow
-  };
-};
-
-const createTableCell = (text) => {
-  return {
-    type: "table-cell",
-    children: [{ text }]
-  };
-};
-
-const createTableNode = (cellText) => {
-  const tableChildren = Array.from(cellText, (value) => createRow(value));
-  let tableNode = { type: "table", children: tableChildren };
-  return tableNode;
 }
