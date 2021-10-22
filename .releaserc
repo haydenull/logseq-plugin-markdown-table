@@ -1,0 +1,31 @@
+{
+  "branches": "main",
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    [
+      "@semantic-release/npm",
+      { "npmPublish": false }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["build/**"],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "zip -qq -r logseq-plugin-markdown-table-${nextRelease.version}.zip package.json logo.png build/"
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": ["llogseq-plugin-markdown-table-*.zip"]
+      }
+    ]
+  ]
+}
