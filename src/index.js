@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import 'antd/dist/antd.css'
 import './index.css'
 import App from './pages/App'
+import { DEFAULT_TABLE } from './utils/contants'
 
 const logseq = window.logseq
 const logseqEditor = logseq.Editor
@@ -23,7 +24,7 @@ logseq.ready().then(() => {
       console.log('[faiz:] === block', block)
       const { format, content } = block
       if (format !== 'markdown') return logseqApp.showMsg('woz-markdown-table-editor only support markdown')
-      renderApp(content, e.uuid)
+      renderApp(content || DEFAULT_TABLE, e.uuid)
       logseq.showMainUI()
     })
   })

@@ -1,6 +1,6 @@
 {
   "name": "logseq-plugin-markdown-table",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "markdown table editor for logseq",
   "main": "build/index.html",

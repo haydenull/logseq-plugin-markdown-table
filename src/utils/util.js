@@ -1,4 +1,7 @@
+import { DEFAULT_TABLE } from './contants'
+
 export const stringToSlateValue = (str = '') => {
+  str = str || DEFAULT_TABLE
   const _arr = str.trim().split('\n').filter(Boolean)
   const contentArr = [_arr[0]].concat(_arr.slice(2))
   const res = contentArr.map(rowStr => {

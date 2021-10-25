@@ -6,10 +6,9 @@ import { Button } from 'antd'
 import withTables from '../utils/withTable.js'
 import ToolBar from '../components/ToolBar'
 import { stringToSlateValue, slateValueToString } from '../utils/util.js'
+import { DEFAULT_TABLE } from '../utils/contants'
 
 import './App.css'
-
-const DEFAULT_TABLE = '|||\n|--|--|\n|||'
 
 const logseq = window.logseq
 const logseqApp = logseq.App
@@ -85,6 +84,7 @@ const SlateEditor = ({ initialTableContent = DEFAULT_TABLE, blockId }) => {
     //   ]
     // }
   // ])
+  console.log('[faiz:] === initialTableContent', initialTableContent)
   const [value, setValue] = useState([stringToSlateValue(initialTableContent)])
   console.log('[faiz:] === createTableNode', stringToSlateValue(initialTableContent), initialTableContent)
 
