@@ -24,7 +24,7 @@
     [
       "@semantic-release/github",
       {
-        "assets": ["llogseq-plugin-markdown-table-*.zip"]
+        "assets": ["logseq-plugin-markdown-table-*.zip"]
       }
     ]
   ]
