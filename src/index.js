@@ -18,7 +18,7 @@ logseq.ready().then(() => {
     }
   `)
   console.log('[faiz:] === markdown-table-editor-plugin loaded')
-  logseqEditor.registerBlockContextMenuItem('woz-markdown-table-editor', (e) => {
+  logseqEditor.registerBlockContextMenuItem('markdown-table-editor', (e) => {
     console.log('[faiz:] === woz-markdown-table-editor', e)
     logseqEditor.getBlock(e.uuid).then(block => {
       console.log('[faiz:] === block', block)
