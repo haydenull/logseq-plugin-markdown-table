@@ -28,6 +28,12 @@ logseq.ready().then(() => {
       logseq.showMainUI()
     })
   })
+
+  logseq.on('ui:visible:changed', (e) => {
+    if (!e.visible) {
+      ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+    }
+  });
 })
 
 const renderApp = (initialTableContent, blockId) => {
