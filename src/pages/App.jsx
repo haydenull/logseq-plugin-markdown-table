@@ -104,7 +104,8 @@ const SlateEditor = ({ initialTableContent = DEFAULT_TABLE, blockId }) => {
         logseq.hideMainUI()
       })
       .catch(err => {
-        logseqApp.showMsg('markdown table overwrite error', err)
+        logseqApp.showMsg('markdown table overwrite error', 'warning')
+        console.log('[faiz:] === onClickConfirm error', err)
       })
   }
 

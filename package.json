@@ -6,7 +6,7 @@
   "main": "build/index.html",
   "homepage": "./",
   "logseq": {
-    "id": "hayden_markdown_table",
+    "id": "logseq-markdown-table",
     "icon": "./logo.png"
   },
   "dependencies": {
@@ -19,6 +19,7 @@
     "@testing-library/user-event": "^12.8.3",
     "antd": "^4.16.13",
     "autoprefixer": "^9",
+    "markdown-it": "^12.2.0",
     "postcss": "^7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

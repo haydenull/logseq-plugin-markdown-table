@@ -2,9 +2,13 @@ import '@logseq/libs'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import 'antd/dist/antd.css'
+import MarkdownIt from 'markdown-it'
+
 import './index.css'
 import App from './pages/App'
 import { DEFAULT_TABLE } from './utils/contants'
+
+const md = new MarkdownIt()
 
 const logseq = window.logseq
 const logseqEditor = logseq.Editor
@@ -13,7 +17,7 @@ const logseqApp = logseq.App
 logseq.ready().then(() => {
   // padding-left: var(--ls-left-sidebar-width);
   logseq.provideStyle(`
-    iframe#hayden_markdown_table.lsp-iframe-sandbox {
+    iframe#logseq-markdown-table.lsp-iframe-sandbox {
       z-index: 10;
     }
   `)
@@ -23,9 +27,16 @@ logseq.ready().then(() => {
     logseqEditor.getBlock(e.uuid).then(block => {
       console.log('[faiz:] === block', block)
       const { format, content } = block
-      if (format !== 'markdown') return logseqApp.showMsg('woz-markdown-table-editor only support markdown')
-      renderApp(content || DEFAULT_TABLE, e.uuid)
-      logseq.showMainUI()
+      if (format !== 'markdown') return logseqApp.showMsg('woz-markdown-table-editor only support markdown', 'warning')
+
+      const renderHtml = md.render(content)
+      if (renderHtml.startsWith('<table>') && (renderHtml.endsWith('</table>') || renderHtml.endsWith('</table>\n'))) {
+        renderApp(content || DEFAULT_TABLE, e.uuid)
+        logseq.showMainUI()
+      } else {
+        window.logseq.App.showMsg('Sorry, block content format to markdown table error', 'warning')
+        console.log('[faiz:] === block content format to markdown table error', renderHtml, renderHtml.startsWith('<table>'), renderHtml.endsWith('</table>'), renderHtml.endsWith('</table>\n'))
+      }
     })
   })
 
