@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.1.3...v1.1.4) (2021-11-02)
+
+
+### Bug Fixes
+
+* fix the mask is blocked by the sidebar ([36c9213](https://github.com/haydenull/logseq-plugin-markdown-table/commit/36c92132c528a18fb6a01e8d30b2fbf44adba712))
+
 ## [1.1.3](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.1.2...v1.1.3) (2021-11-02)
 
 
