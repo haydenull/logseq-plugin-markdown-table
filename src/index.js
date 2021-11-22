@@ -27,16 +27,18 @@ logseq.ready().then(() => {
     logseqEditor.getBlock(e.uuid).then(block => {
       console.log('[faiz:] === block', block)
       const { format, content } = block
+      // only support markdown
       if (format !== 'markdown') return logseqApp.showMsg('woz-markdown-table-editor only support markdown', 'warning')
+      // for empty block
+      if (content === '') return renderApp(DEFAULT_TABLE, e.uuid)
 
       const renderHtml = md.render(content)
       if (renderHtml.startsWith('<table>') && (renderHtml.endsWith('</table>') || renderHtml.endsWith('</table>\n'))) {
-        renderApp(content || DEFAULT_TABLE, e.uuid)
-        logseq.showMainUI()
-      } else {
-        window.logseq.App.showMsg('Sorry, block content format to markdown table error', 'warning')
-        console.log('[faiz:] === block content format to markdown table error', renderHtml, renderHtml.startsWith('<table>'), renderHtml.endsWith('</table>'), renderHtml.endsWith('</table>\n'))
+        return renderApp(content || DEFAULT_TABLE, e.uuid)
       }
+      // format to table error
+      window.logseq.App.showMsg('Sorry, block content format to markdown table error', 'warning')
+      console.log('[faiz:] === block content format to markdown table error', renderHtml, renderHtml.startsWith('<table>'), renderHtml.endsWith('</table>'), renderHtml.endsWith('</table>\n'))
     })
   })
 
@@ -54,6 +56,7 @@ const renderApp = (initialTableContent, blockId) => {
     </React.StrictMode>,
     document.getElementById('root')
   )
+  logseq.showMainUI()
 }
 
 
