@@ -7,6 +7,7 @@ import MarkdownIt from 'markdown-it'
 import './index.css'
 import App from './pages/App'
 import { DEFAULT_TABLE } from './utils/contants'
+import parseMarkdownTable from './utils/parseRawInputByMarkdownIt'
 
 const md = new MarkdownIt()
 
@@ -32,13 +33,21 @@ logseq.ready().then(() => {
       // for empty block
       if (content === '') return renderApp(DEFAULT_TABLE, e.uuid)
 
-      const renderHtml = md.render(content)
-      if (renderHtml.startsWith('<table>') && (renderHtml.endsWith('</table>') || renderHtml.endsWith('</table>\n'))) {
-        return renderApp(content || DEFAULT_TABLE, e.uuid)
+      const tables = parseMarkdownTable(content)
+      if (tables?.length > 0) {
+        const [startLine, endLine] = tables[0]
+        const firstTable = content.split('\n').slice(startLine, endLine).join('\n')
+        console.log('[faiz:] === firstTable', content, firstTable, startLine, endLine)
+        return renderApp(firstTable, e.uuid)
       }
+
+      // const renderHtml = md.render(content)
+      // if (renderHtml.startsWith('<table>') && (renderHtml.endsWith('</table>') || renderHtml.endsWith('</table>\n'))) {
+      //   return renderApp(content || DEFAULT_TABLE, e.uuid)
+      // }
       // format to table error
       window.logseq.App.showMsg('Sorry, block content format to markdown table error', 'warning')
-      console.log('[faiz:] === block content format to markdown table error', renderHtml, renderHtml.startsWith('<table>'), renderHtml.endsWith('</table>'), renderHtml.endsWith('</table>\n'))
+      console.log('[faiz:] === block content format to markdown table error', tables)
     })
   })
 
