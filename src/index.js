@@ -58,10 +58,10 @@ logseq.ready().then(() => {
   });
 })
 
-const renderApp = (initialTableContent, blockId) => {
+const renderApp = (cntent, tables, blockId) => {
   ReactDOM.render(
     <React.StrictMode>
-      <App initialTableContent={initialTableContent} blockId={blockId} />
+      <App content={content} tables={tables} blockId={blockId} />
     </React.StrictMode>,
     document.getElementById('root')
   )
