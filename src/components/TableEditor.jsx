@@ -28,7 +28,7 @@ const Element = props => {
   }
 }
 
-const TableEditor = ({ content = DEFAULT_TABLE, blockId }) => {
+const TableEditor = ({ content = DEFAULT_TABLE }) => {
   // const [value, setValue] = useState([
   //   // {
   //   //   type: 'paragaph',
@@ -93,8 +93,7 @@ const TableEditor = ({ content = DEFAULT_TABLE, blockId }) => {
     logseq.hideMainUI()
   }
   const onClickConfirm = () => {
-    if (!blockId) return logseqApp.showMsg('uuid error')
-    console.log('[faiz:] === onClickConfirm', blockId, value)
+    console.log('[faiz:] === onClickConfirm', value)
     const markdownContent = slateValueToString(value[0])
     logseqEditor.updateBlock(blockId, markdownContent)
       .then(() => {

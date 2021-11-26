@@ -33,11 +33,59 @@ const App = ({ content, tables, blockId }) => {
   )
 }
 
-const getTablesStr = (str, tables) => {
+const getTablesStr = (str, tables = []) => {
   const strToArr = str.split('\n')
-  return tables.map(sourceMap => {
-    const [startLine, endLine] = sourceMap
-    return strToArr.slice(startLine, endLine)
+  let strArrByTable = []
+
+  tables.forEach((table, index, arr) => {
+    const [startLine, endLine] = table
+
+    // todo: To be optimized
+    if (index === 0) {
+      if (startLine === 0) {
+        strArrByTable.push({
+          str: strToArr.slice(startLine, endLine).join('\n'),
+          type: 'table',
+        })
+      } else {
+        strArrByTable.push({
+          str: strToArr.slice(0, startLine).join('\n'),
+          type: 'notTable',
+        })
+        strArrByTable.push({
+          str: strToArr.slice(startLine, endLine).join('\n'),
+          type: 'table',
+        })
+      }
+    } else {
+      const preEndLine = arr[index - 1][1]
+      if (startLine === preEndLine) {
+        strArrByTable.push({
+          str: strToArr.slice(startLine, endLine).join('\n'),
+          type: 'table',
+        })
+      } else {
+        strArrByTable.push({
+          str: strToArr.slice(preEndLine, startLine).join('\n'),
+          type: 'notTable',
+        })
+        strArrByTable.push({
+          str: strToArr.slice(startLine, endLine).join('\n'),
+          type: 'table',
+        })
+      }
+    }
+
   })
+
+  const [/*lastTableStartLine*/, lastTableEndLine] = tables[tables.length - 1]
+  if (strToArr.length - 1 > lastTableEndLine) {
+    strArrByTable.push({
+      str: strToArr.slice(lastTableEndLine),
+      type: 'notTable'
+    })
+  }
+
+  return strArrByTable
 }
 export default App
