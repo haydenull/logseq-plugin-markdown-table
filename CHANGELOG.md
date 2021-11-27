@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.1.4...v1.1.5) (2021-11-22)
+
+
+### Bug Fixes
+
+* empty block format error ([2bb70fd](https://github.com/haydenull/logseq-plugin-markdown-table/commit/2bb70fd41db98b1a5a1272e50494b5899d56521e))
+
 ## [1.1.4](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.1.3...v1.1.4) (2021-11-02)
 
 
