@@ -6,7 +6,8 @@ import 'antd/dist/antd.css'
 import App from './pages/App'
 import { DEFAULT_TABLE } from './utils/contants'
 import parseMarkdownTable from './utils/parseRawInputByMarkdownIt'
-import { multipleTables, empty, longTables, onlyText } from './utils/testExample'
+// import { multipleTables, empty, longTables, onlyText } from './utils/testExample'
+import { multipleTables } from './utils/testExample'
 import './index.css'
 
 const logseq = window.logseq
