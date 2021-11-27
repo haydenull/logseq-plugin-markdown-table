@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.1.6...v1.2.0) (2021-11-27)
+
+
+### Features
+
+* support multiple tables and complex content ([fecd9be](https://github.com/haydenull/logseq-plugin-markdown-table/commit/fecd9be9a198cf28805511f59f229b7f80a81e9c))
+
 ## [1.1.6](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.1.5...v1.1.6) (2021-11-27)
 
 
