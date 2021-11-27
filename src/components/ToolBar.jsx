@@ -15,7 +15,7 @@ const ToolBar = () => {
   }
 
   return (
-    <div className="mt-8 mb-2 space-x-2 bg-white inline-flex px-3 py-1 rounded-md shadow-sm">
+    <div className="mb-2 space-x-2 bg-white inline-flex px-3 py-1 rounded-md shadow-sm">
       <Tooltip title="insert row above" arrowPointAtCenter placement="topLeft">
         <InsertRowAboveOutlined className="text-xl cursor-pointer hover:opacity-70" onMouseDown={e => handleButtonClick(e, 'insert-row-above')} />
       </Tooltip>
@@ -37,7 +37,7 @@ const ToolBar = () => {
       <Tooltip title="delete column" arrowPointAtCenter placement="topLeft">
         <DeleteColumnOutlined className="text-xl cursor-pointer hover:opacity-70" onMouseDown={e => handleButtonClick(e, 'delete-column')} />
       </Tooltip>
-      
+
     </div>
   )
 }

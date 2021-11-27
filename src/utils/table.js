@@ -35,15 +35,12 @@ export class TableUtil {
   insertCells = (tableNode, path, selection, action) => {
     const { anchor } = selection
     const cursorPosition = { row: anchor?.path[1], column: anchor?.path[2] }
-    console.log('[faiz:] === selection', selection)
 
     let existingText = Array.from(tableNode.children, (rows) =>
       Array.from(rows.children, (arr) => arr.children[0].text)
     );
     const columns = existingText[0].length;
     let newSelection = {...selection}
-
-    console.log('[faiz:] === existingText', existingText)
 
     if (action === 'insert-row-above') {
       existingText.splice(cursorPosition.row, 0, Array(columns).fill(''))
@@ -96,7 +93,7 @@ export class TableUtil {
     } else {
       return console.error('[insert cells run error]: unsupport action or can not delete', action, columns)
     }
-    console.log('[faiz:] === xxxxx', existingText)
+
     this.removeTable()
     const newTable = createTableNode(existingText);
     Transforms.insertNodes(this.editor, newTable, {
@@ -129,7 +126,6 @@ export class TableUtil {
       });
       if (tableNode) {
         const [oldTable, path] = tableNode;
-        console.log('[faiz:] === path', oldTable, path)
         this.insertCells(oldTable, path, selection, action);
       }
     }

@@ -1,5 +1,6 @@
 {
   "name": "logseq-plugin-markdown-table",
+  "version": "1.2.0",
   "version": "1.1.5",
   "private": true,
   "description": "markdown table editor for logseq",
@@ -8,6 +9,12 @@
   "logseq": {
     "id": "logseq-markdown-table",
     "icon": "./logo.png"
+  },
+  "scripts": {
+    "start": "cross-env REACT_APP_ENV=browser craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
@@ -28,12 +35,6 @@
     "slate-react": "^0.67.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "web-vitals": "^1.1.2"
-  },
-  "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -58,6 +59,7 @@
     "@semantic-release/exec": "^6.0.1",
     "@semantic-release/git": "^10.0.0",
     "@semantic-release/npm": "^8.0.2",
-    "babel-plugin-import": "^1.13.3"
+    "babel-plugin-import": "^1.13.3",
+    "cross-env": "^7.0.3"
   }
 }

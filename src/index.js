@@ -2,63 +2,82 @@ import '@logseq/libs'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import 'antd/dist/antd.css'
-import MarkdownIt from 'markdown-it'
 
-import './index.css'
 import App from './pages/App'
 import { DEFAULT_TABLE } from './utils/contants'
-
-const md = new MarkdownIt()
+import parseMarkdownTable from './utils/parseRawInputByMarkdownIt'
+import { multipleTables, empty, longTables, onlyText } from './utils/testExample'
+import './index.css'
 
 const logseq = window.logseq
 const logseqEditor = logseq.Editor
 const logseqApp = logseq.App
 
-logseq.ready().then(() => {
-  // padding-left: var(--ls-left-sidebar-width);
-  logseq.provideStyle(`
-    iframe#logseq-markdown-table.lsp-iframe-sandbox {
-      z-index: 10;
-    }
-  `)
-  console.log('[faiz:] === markdown-table-editor-plugin loaded')
-  logseqEditor.registerBlockContextMenuItem('markdown-table-editor', (e) => {
-    console.log('[faiz:] === woz-markdown-table-editor', e)
-    logseqEditor.getBlock(e.uuid).then(block => {
-      console.log('[faiz:] === block', block)
-      const { format, content } = block
-      // only support markdown
-      if (format !== 'markdown') return logseqApp.showMsg('woz-markdown-table-editor only support markdown', 'warning')
-      // for empty block
-      if (content === '') return renderApp(DEFAULT_TABLE, e.uuid)
-
-      const renderHtml = md.render(content)
-      if (renderHtml.startsWith('<table>') && (renderHtml.endsWith('</table>') || renderHtml.endsWith('</table>\n'))) {
-        return renderApp(content || DEFAULT_TABLE, e.uuid)
+const isInBrower = process.env.REACT_APP_ENV === 'browser'
+if (isInBrower) {
+  let testCase = multipleTables
+  console.log('[faiz:] === Raw Input: \n', testCase)
+  let tables = parseMarkdownTable(testCase)
+  if (tables?.length === 0) {
+    console.log('[faiz:] === No Table Found')
+    testCase += `${testCase === '' ? '' : '\n'}${DEFAULT_TABLE}`
+    tables = parseMarkdownTable(testCase)
+  }
+  console.log('[faiz:] === markdownIt parse res', tables)
+  renderApp(testCase, tables, 111)
+} else {
+  logseq.ready().then(() => {
+    // padding-left: var(--ls-left-sidebar-width);
+    logseq.provideStyle(`
+      iframe#logseq-markdown-table.lsp-iframe-sandbox {
+        z-index: 10;
       }
-      // format to table error
-      window.logseq.App.showMsg('Sorry, block content format to markdown table error', 'warning')
-      console.log('[faiz:] === block content format to markdown table error', renderHtml, renderHtml.startsWith('<table>'), renderHtml.endsWith('</table>'), renderHtml.endsWith('</table>\n'))
+    `)
+    console.log('[faiz:] === markdown-table-editor-plugin loaded')
+    logseqEditor.registerBlockContextMenuItem('markdown-table-editor', (e) => {
+      console.log('[faiz:] === woz-markdown-table-editor', e)
+      logseqEditor.getBlock(e.uuid).then(block => {
+        console.log('[faiz:] === block', block)
+        const { format, content } = block
+        // only support markdown
+        if (format !== 'markdown') return logseqApp.showMsg('woz-markdown-table-editor only support markdown', 'warning')
+        // for empty block
+        // todo: fix
+        if (content === '') return renderApp(DEFAULT_TABLE, [], e.uuid)
+
+        const tables = parseMarkdownTable(content)
+        if (tables?.length > 0) {
+          // const [startLine, endLine] = tables[0]
+          // const firstTable = content.split('\n').slice(startLine, endLine).join('\n')
+          // console.log('[faiz:] === firstTable', content, firstTable, startLine, endLine)
+          // return renderApp(firstTable, e.uuid)
+          return renderApp(content, tables, e.uuid)
+        }
+
+        // const renderHtml = md.render(content)
+        // if (renderHtml.startsWith('<table>') && (renderHtml.endsWith('</table>') || renderHtml.endsWith('</table>\n'))) {
+        //   return renderApp(content || DEFAULT_TABLE, e.uuid)
+        // }
+        // format to table error
+        window.logseq.App.showMsg('Sorry, block content format to markdown table error', 'warning')
+        console.log('[faiz:] === block content format to markdown table error', tables)
+      })
     })
+
+    logseq.on('ui:visible:changed', (e) => {
+      if (!e.visible) {
+        ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+      }
+    });
   })
+}
 
-  logseq.on('ui:visible:changed', (e) => {
-    if (!e.visible) {
-      ReactDOM.unmountComponentAtNode(document.getElementById('root'));
-    }
-  });
-})
-
-const renderApp = (initialTableContent, blockId) => {
+function renderApp(content, tables, blockId) {
   ReactDOM.render(
     <React.StrictMode>
-      <App initialTableContent={initialTableContent} blockId={blockId} />
+      <App content={content} tables={tables} blockId={blockId} />
     </React.StrictMode>,
     document.getElementById('root')
   )
-  logseq.showMainUI()
+  if (!isInBrower) logseq.showMainUI()
 }
-
-
-// debug
-// renderApp()
