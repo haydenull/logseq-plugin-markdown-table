@@ -1,16 +1,11 @@
-import { useState, useMemo, useCallback } from 'react'
+import { useState, useMemo, useCallback, useImperativeHandle, forwardRef } from 'react'
 import { createEditor } from 'slate'
 import { Slate, Editable, withReact } from 'slate-react'
-import { Button } from 'antd'
 
 import withTables from '../utils/withTable.js'
 import ToolBar from '../components/ToolBar'
-import { stringToSlateValue, slateValueToString } from '../utils/util.js'
+import { stringToSlateValue } from '../utils/util.js'
 import { DEFAULT_TABLE } from '../utils/contants'
-
-const logseq = window.logseq
-const logseqApp = logseq.App
-const logseqEditor = logseq.Editor
 
 const Element = props => {
   const { attributes, children, element } = props
@@ -28,7 +23,7 @@ const Element = props => {
   }
 }
 
-const TableEditor = ({ content = DEFAULT_TABLE }) => {
+const TableEditor = ({ content = DEFAULT_TABLE }, ref) => {
   // const [value, setValue] = useState([
   //   // {
   //   //   type: 'paragaph',
@@ -82,52 +77,35 @@ const TableEditor = ({ content = DEFAULT_TABLE }) => {
     //   ]
     // }
   // ])
-  console.log('[faiz:] === tableEditor content', content)
+  // console.log('[faiz:] === tableEditor input: \n', content)
   const [value, setValue] = useState([stringToSlateValue(content)])
-  console.log('[faiz:] === createTableNode', stringToSlateValue(content))
+  console.log('[faiz:] === tableEditor format to Slate Editor Node: ', stringToSlateValue(content))
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      getEditorValue: () => value,
+    }),
+  )
 
   const editor = useMemo(() => withTables(withReact(createEditor())), [])
   const renderElement = useCallback(props => <Element {...props} />, [])
 
-  const onClickCancel = () => {
-    logseq.hideMainUI()
-  }
-  const onClickConfirm = () => {
-    console.log('[faiz:] === onClickConfirm', value)
-    const markdownContent = slateValueToString(value[0])
-    logseqEditor.updateBlock(blockId, markdownContent)
-      .then(() => {
-        logseqApp.showMsg('markdown table overwrite success')
-        logseq.hideMainUI()
-      })
-      .catch(err => {
-        logseqApp.showMsg('markdown table overwrite error', 'warning')
-        console.log('[faiz:] === onClickConfirm error', err)
-      })
-  }
-
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
-      <div className="w-screen h-screen absolute" style={{ background: 'rgba(0, 0, 0, .3)', zIndex: -1 }} onClick={onClickCancel}></div>
-      <div className="w-2/3 h-1/2">
-        <Slate
-          editor={editor}
-          value={value}
-          onChange={setValue}
-        >
-          <ToolBar />
-          <Editable
-            placeholder='Write something'
-            renderElement={renderElement}
-          />
-        </Slate>
-        <div className="mt-2 flex justify-end">
-          <Button className="mr-1 rounded" onClick={onClickCancel}>Cancel</Button>
-          <Button className="rounded" type="primary" onClick={onClickConfirm}>Confirm</Button>
-        </div>
-      </div>
+    <div>
+      <Slate
+        editor={editor}
+        value={value}
+        onChange={setValue}
+      >
+        <ToolBar />
+        <Editable
+          placeholder='Write something'
+          renderElement={renderElement}
+        />
+      </Slate>
     </div>
   )
 }
 
-export default TableEditor
+export default forwardRef(TableEditor)
