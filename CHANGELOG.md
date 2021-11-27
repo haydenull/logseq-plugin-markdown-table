@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.1.5...v1.1.6) (2021-11-27)
+
+
+### Bug Fixes
+
+* remove no use var ([ca77959](https://github.com/haydenull/logseq-plugin-markdown-table/commit/ca779595de97be466e43ec183f90df92dab84c8f))
+
 ## [1.1.5](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.1.4...v1.1.5) (2021-11-22)
 
 
