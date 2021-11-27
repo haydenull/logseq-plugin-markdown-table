@@ -6,8 +6,8 @@ import 'antd/dist/antd.css'
 import App from './pages/App'
 import { DEFAULT_TABLE } from './utils/contants'
 import parseMarkdownTable from './utils/parseRawInputByMarkdownIt'
-// import { multipleTables, empty, longTables, onlyText } from './utils/testExample'
-import { multipleTables } from './utils/testExample'
+import { multipleTables, empty, longTables, onlyText } from './utils/testExample'
+// import { multipleTables } from './utils/testExample'
 import './index.css'
 
 const logseq = window.logseq
@@ -15,17 +15,19 @@ const logseqEditor = logseq.Editor
 const logseqApp = logseq.App
 
 const isInBrower = process.env.REACT_APP_ENV === 'browser'
-if (isInBrower) {
-  let testCase = multipleTables
-  console.log('[faiz:] === Raw Input: \n', testCase)
-  let tables = parseMarkdownTable(testCase)
+const bootEditor = (input, blockId) => {
+  console.log('[faiz:] === Raw Input: \n', input)
+  let tables = parseMarkdownTable(input)
   if (tables?.length === 0) {
     console.log('[faiz:] === No Table Found')
-    testCase += `${testCase === '' ? '' : '\n'}${DEFAULT_TABLE}`
-    tables = parseMarkdownTable(testCase)
+    input += `${input === '' ? '' : '\n'}${DEFAULT_TABLE}`
+    tables = parseMarkdownTable(input)
   }
   console.log('[faiz:] === markdownIt parse res', tables)
-  renderApp(testCase, tables, 111)
+  renderApp(input, tables, blockId)
+}
+if (isInBrower) {
+  bootEditor(empty)
 } else {
   logseq.ready().then(() => {
     // padding-left: var(--ls-left-sidebar-width);
@@ -42,26 +44,29 @@ if (isInBrower) {
         const { format, content } = block
         // only support markdown
         if (format !== 'markdown') return logseqApp.showMsg('woz-markdown-table-editor only support markdown', 'warning')
+
+        bootEditor(content, e.uuid)
+
         // for empty block
         // todo: fix
-        if (content === '') return renderApp(DEFAULT_TABLE, [], e.uuid)
+        // if (content === '') return renderApp(DEFAULT_TABLE, [], e.uuid)
 
-        const tables = parseMarkdownTable(content)
-        if (tables?.length > 0) {
-          // const [startLine, endLine] = tables[0]
-          // const firstTable = content.split('\n').slice(startLine, endLine).join('\n')
-          // console.log('[faiz:] === firstTable', content, firstTable, startLine, endLine)
-          // return renderApp(firstTable, e.uuid)
-          return renderApp(content, tables, e.uuid)
-        }
+        // const tables = parseMarkdownTable(content)
+        // if (tables?.length > 0) {
+        //   // const [startLine, endLine] = tables[0]
+        //   // const firstTable = content.split('\n').slice(startLine, endLine).join('\n')
+        //   // console.log('[faiz:] === firstTable', content, firstTable, startLine, endLine)
+        //   // return renderApp(firstTable, e.uuid)
+        //   return renderApp(content, tables, e.uuid)
+        // }
 
         // const renderHtml = md.render(content)
         // if (renderHtml.startsWith('<table>') && (renderHtml.endsWith('</table>') || renderHtml.endsWith('</table>\n'))) {
         //   return renderApp(content || DEFAULT_TABLE, e.uuid)
         // }
         // format to table error
-        window.logseq.App.showMsg('Sorry, block content format to markdown table error', 'warning')
-        console.log('[faiz:] === block content format to markdown table error', tables)
+        // window.logseq.App.showMsg('Sorry, block content format to markdown table error', 'warning')
+        // console.log('[faiz:] === block content format to markdown table error')
       })
     })
 
