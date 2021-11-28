@@ -1,3 +1,12 @@
+## [1.2.1](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.2.0...v1.2.1) (2021-11-28)
+
+
+### Bug Fixes
+
+* build error ([28c7d28](https://github.com/haydenull/logseq-plugin-markdown-table/commit/28c7d282783f2a6918b84da0a3bd8147a84d6fa7))
+* empty content error ([7cfd3af](https://github.com/haydenull/logseq-plugin-markdown-table/commit/7cfd3af353d8a5a2fe7eb3960a8b35f8c7457220))
+* empty content error ([69af074](https://github.com/haydenull/logseq-plugin-markdown-table/commit/69af0744a305f05592d351311492d4f6492df471))
+
 # [1.2.0](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.1.6...v1.2.0) (2021-11-27)
 
 
