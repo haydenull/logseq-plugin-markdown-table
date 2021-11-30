@@ -6,8 +6,8 @@ import 'antd/dist/antd.css'
 import App from './pages/App'
 import { DEFAULT_TABLE } from './utils/contants'
 import parseMarkdownTable from './utils/parseRawInputByMarkdownIt'
-// import { multipleTables, empty, longTables, onlyText } from './utils/testExample'
-import { empty } from './utils/testExample'
+// import { multipleTables, empty, longTables, onlyText, tableWithTextBeforeAndAfter } from './utils/testExample'
+import { tableWithTextBeforeAndAfter } from './utils/testExample'
 import './index.css'
 
 const logseq = window.logseq
@@ -19,7 +19,7 @@ const bootEditor = (input, blockId) => {
   console.log('[faiz:] === Raw Input: \n', input)
   let tables = parseMarkdownTable(input)
   if (tables?.length === 0) {
-    console.log('[faiz:] === No Table Found')
+    console.warn('[faiz:] === No Table Found')
     input += `${input === '' ? '' : '\n'}${DEFAULT_TABLE}`
     tables = parseMarkdownTable(input)
   }
@@ -27,7 +27,7 @@ const bootEditor = (input, blockId) => {
   renderApp(input, tables, blockId)
 }
 if (isInBrower) {
-  bootEditor(empty)
+  bootEditor(tableWithTextBeforeAndAfter, 111)
 } else {
   logseq.ready().then(() => {
     // padding-left: var(--ls-left-sidebar-width);

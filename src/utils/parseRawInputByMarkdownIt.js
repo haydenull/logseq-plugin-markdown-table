@@ -16,7 +16,7 @@ const parseMarkdownTable = (str) => {
       let [startLine , endLine] = token.map
       const endLineStr = strArr[endLine]
 
-      if (endLineStr === undefined || tableLineReg.test(endLineStr)) return token.map
+      if (tableLineReg.test(endLineStr)) return token.map
 
       // fix markdown-it table must have a newLine after
       let trueEndLine = -1

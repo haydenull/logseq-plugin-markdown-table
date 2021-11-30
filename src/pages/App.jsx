@@ -27,7 +27,7 @@ const App = ({ content, tables, blockId }) => {
   }
 
   const onClickConfirm = () => {
-    if (!blockId) return logseqApp.showMsg('uuid error')
+    if (!blockId && !isInBrower) return logseqApp.showMsg('uuid error')
     const markdownContent = ArrAfterSplitByTable.map((node, index) => {
       if (node.type === 'table') {
         const slateVal = tableEditorMapRef.current?.[index]?.getEditorValue()?.[0]
@@ -59,7 +59,7 @@ const App = ({ content, tables, blockId }) => {
             ArrAfterSplitByTable?.map((node, index) => {
               return node?.type === 'table'
               ? <TableEditor content={node?.str} key={index} ref={dom => setTableEditorRef(index, dom)} />
-              : <div className="bg-gray-400 text-gray-300 my-3 rounded px-1 py-2" key={index}>{node.str}</div>
+              : <div className="bg-gray-400 text-gray-300 my-3 rounded px-1 py-2" key={index} style={{whiteSpace: 'pre-line'}}>{node.str}</div>
             })
           }
         </div>
@@ -107,9 +107,9 @@ const splitStrByTable = (str, tables = []) => {
   })
 
   const [/*lastTableStartLine*/, lastTableEndLine] = tables[tables.length - 1]
-  if (strToArr.length - 1 > lastTableEndLine) {
+  if (strToArr.length - 1 >= lastTableEndLine) {
     strArrByTable.push({
-      str: strToArr.slice(lastTableEndLine),
+      str: strToArr.slice(lastTableEndLine).join('\n'),
       type: 'notTable'
     })
   }
