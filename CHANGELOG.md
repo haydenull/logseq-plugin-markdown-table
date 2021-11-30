@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.2.1...v1.2.2) (2021-11-30)
+
+
+### Bug Fixes
+
+* fix the text after table was incorrectly overwritten ([ae2af3b](https://github.com/haydenull/logseq-plugin-markdown-table/commit/ae2af3b0e2a76822ee822fa89b64ce788d16c6ad))
+
 ## [1.2.1](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.2.0...v1.2.1) (2021-11-28)
 
 
