@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { Button } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 
 import TableEditor from '../components/TableEditor'
 import { slateValueToString } from '../utils/util'
@@ -70,13 +71,13 @@ const App = ({ content, tables, blockId }) => {
           {
             arrAfterSplitByTable?.map((node, index) => {
               return node?.type === 'table'
-              ? (<TableEditor content={node?.str} key={index} ref={dom => setTableEditorRef(index, dom)} />)
+              ? (<TableEditor className="my-2" content={node?.str} key={index} ref={dom => setTableEditorRef(index, dom)} />)
               : (<div className="bg-gray-400 text-gray-300 my-3 rounded px-1 py-2" key={index} style={{whiteSpace: 'pre-line'}}>{node.str}</div>)
             })
           }
         </div>
       </div>
-      <Button ghost className="rounded" onClick={onClickAdd}>Add New Table</Button>
+      <Button ghost className="rounded mt-2 flex items-center" icon={<PlusOutlined />} onClick={onClickAdd}>Add New Table</Button>
       <div className="flex w-2/3 flex-row justify-end mt-4">
         <Button className="mr-1 rounded" onClick={onClickCancel}>Cancel</Button>
         <Button className="rounded" type="primary" onClick={onClickConfirm}>Confirm</Button>

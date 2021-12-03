@@ -23,7 +23,7 @@ const Element = props => {
   }
 }
 
-const TableEditor = ({ content = DEFAULT_TABLE }, ref) => {
+const TableEditor = ({ content = DEFAULT_TABLE, className = '' }, ref) => {
   // const [value, setValue] = useState([
   //   // {
   //   //   type: 'paragaph',
@@ -92,7 +92,7 @@ const TableEditor = ({ content = DEFAULT_TABLE }, ref) => {
   const renderElement = useCallback(props => <Element {...props} />, [])
 
   return (
-    <div>
+    <div className={className}>
       <Slate
         editor={editor}
         value={value}
