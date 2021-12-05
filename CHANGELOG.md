@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.2.2...v1.2.3) (2021-12-05)
+
+
+### Bug Fixes
+
+* fix [[]] parse error ([78ea025](https://github.com/haydenull/logseq-plugin-markdown-table/commit/78ea025b7877e84d12a6d9d117326fc1449d61ac))
+
 ## [1.2.2](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.2.1...v1.2.2) (2021-11-30)
 
 
