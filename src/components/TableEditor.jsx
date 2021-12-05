@@ -79,7 +79,7 @@ const TableEditor = ({ content = DEFAULT_TABLE }, ref) => {
   // ])
   // console.log('[faiz:] === tableEditor input: \n', content)
   const [value, setValue] = useState([stringToSlateValue(content)])
-  console.log('[faiz:] === tableEditor format to Slate Editor Node: ', stringToSlateValue(content))
+  // console.log('[faiz:] === tableEditor format to Slate Editor Node: ', stringToSlateValue(content))
 
   useImperativeHandle(
     ref,

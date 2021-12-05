@@ -7,7 +7,7 @@ const md = new MarkdownIt()
 const parseMarkdownTable = (str) => {
   const strArr = str.split('\n')
   // token https://github.com/markdown-it/markdown-it/blob/master/lib/token.js
-  const tokenList = md.parse(str)
+  const tokenList = md.parse(str, {})
 
   return tokenList
     .filter(token => token?.type === 'table_open')
