@@ -1,9 +1,10 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { Button } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 
 import TableEditor from '../components/TableEditor'
 import { slateValueToString } from '../utils/util'
-import { tableLineReg } from '../utils/contants'
+import { tableLineReg, DEFAULT_TABLE } from '../utils/contants'
 import './App.css'
 
 const logseq = window.logseq
@@ -15,9 +16,7 @@ const isInBrower = process.env.REACT_APP_ENV === 'browser'
 const App = ({ content, tables, blockId }) => {
 
   const tableEditorMapRef = useRef({})
-
-  const ArrAfterSplitByTable = splitStrByTable(content, tables)
-  console.log('[faiz:] === ArrAfterSplitByTable', ArrAfterSplitByTable)
+  const [arrAfterSplitByTable, setArrAfterSplitByTable] = useState([])
 
   const setTableEditorRef = (index, dom) => {
     tableEditorMapRef.current = {
@@ -28,7 +27,7 @@ const App = ({ content, tables, blockId }) => {
 
   const onClickConfirm = () => {
     if (!blockId && !isInBrower) return logseqApp.showMsg('uuid error')
-    const markdownContent = ArrAfterSplitByTable.map((node, index) => {
+    const markdownContent = arrAfterSplitByTable.map((node, index) => {
       if (node.type === 'table') {
         const slateVal = tableEditorMapRef.current?.[index]?.getEditorValue()?.[0]
         console.log('[faiz:] === slateVal', slateVal)
@@ -36,7 +35,7 @@ const App = ({ content, tables, blockId }) => {
       }
       return node.str
     }).join('\n')
-    if (isInBrower) return console.log('[faiz:] === save content:\n', markdownContent, blockId)
+    if (isInBrower) return console.log('[faiz:] === save content:\n', markdownContent, '\nblockId:', blockId)
 
     logseqEditor.updateBlock(blockId, markdownContent)
       .then(() => {
@@ -49,6 +48,27 @@ const App = ({ content, tables, blockId }) => {
       })
   }
   const onClickCancel = () => logseq.hideMainUI()
+  const onClickAdd = () => {
+    setArrAfterSplitByTable(_arr => {
+      if (_arr.find(node => node.type === 'table')) {
+        // spreate table by empty line
+        return _arr.concat([
+          {
+            type: 'notTable',
+            str: '',
+          },
+          { type: 'table', str: DEFAULT_TABLE }
+        ])
+      }
+      return _arr.concat({ type: 'table', str: DEFAULT_TABLE })
+    })
+  }
+
+  useEffect(() => {
+    const arr = splitStrByTable(content, tables)
+    setArrAfterSplitByTable(arr)
+    console.log('[faiz:] === arrAfterSplitByTable', arr)
+  }, [content, tables])
 
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
@@ -56,14 +76,15 @@ const App = ({ content, tables, blockId }) => {
       <div className="w-2/3 overflow-y-auto" style={{ maxHeight: '80%'}}>
         <div className="mt-2 flex flex-col">
           {
-            ArrAfterSplitByTable?.map((node, index) => {
+            arrAfterSplitByTable?.map((node, index) => {
               return node?.type === 'table'
-              ? <TableEditor content={node?.str} key={index} ref={dom => setTableEditorRef(index, dom)} />
-              : <div className="bg-gray-400 text-gray-300 my-3 rounded px-1 py-2" key={index} style={{whiteSpace: 'pre-line'}}>{node.str}</div>
+              ? (<TableEditor className="my-2" content={node?.str} key={index} ref={dom => setTableEditorRef(index, dom)} />)
+              : (<div className="bg-gray-400 text-gray-300 my-3 rounded px-1 py-2" key={index} style={{whiteSpace: 'pre-line'}}>{node.str}</div>)
             })
           }
         </div>
       </div>
+      <Button ghost className="rounded mt-2 flex items-center" icon={<PlusOutlined />} onClick={onClickAdd}>Add New Table</Button>
       <div className="flex w-2/3 flex-row justify-end mt-4">
         <Button className="mr-1 rounded" onClick={onClickCancel}>Cancel</Button>
         <Button className="rounded" type="primary" onClick={onClickConfirm}>Confirm</Button>
