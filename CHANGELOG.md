@@ -1,3 +1,11 @@
+# [1.3.0](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.2.3...v1.3.0) (2021-12-08)
+
+
+### Features
+
+* add new table button ([97b86fa](https://github.com/haydenull/logseq-plugin-markdown-table/commit/97b86fa2fe621590c91410acbf97d04147790941))
+* complete add btn ([358d3d3](https://github.com/haydenull/logseq-plugin-markdown-table/commit/358d3d3fb14ace356809f7bb7c844a933c000e89))
+
 ## [1.2.3](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.2.2...v1.2.3) (2021-12-05)
 
 
