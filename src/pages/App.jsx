@@ -35,7 +35,7 @@ const App = ({ content, tables, blockId }) => {
       }
       return node.str
     }).join('\n')
-    if (isInBrower) return console.log('[faiz:] === save content:\n', markdownContent, blockId)
+    if (isInBrower) return console.log('[faiz:] === save content:\n', markdownContent, '\nblockId:', blockId)
 
     logseqEditor.updateBlock(blockId, markdownContent)
       .then(() => {
@@ -50,10 +50,17 @@ const App = ({ content, tables, blockId }) => {
   const onClickCancel = () => logseq.hideMainUI()
   const onClickAdd = () => {
     setArrAfterSplitByTable(_arr => {
-      return _arr.concat({
-        type: 'table',
-        str: `${_arr.find(node => node.type === 'table') ? '\n\n' : '\n'}${DEFAULT_TABLE}`,
-      })
+      if (_arr.find(node => node.type === 'table')) {
+        // spreate table by empty line
+        return _arr.concat([
+          {
+            type: 'notTable',
+            str: '',
+          },
+          { type: 'table', str: DEFAULT_TABLE }
+        ])
+      }
+      return _arr.concat({ type: 'table', str: DEFAULT_TABLE })
     })
   }
 
