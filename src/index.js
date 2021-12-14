@@ -7,7 +7,7 @@ import App from './pages/App'
 import { DEFAULT_TABLE } from './utils/contants'
 import parseMarkdownTable from './utils/parseRawInputByMarkdownIt'
 // import { multipleTables, empty, longTables, onlyText, tableWithTextBeforeAndAfter } from './utils/testExample'
-import { tableWithTextBeforeAndAfter } from './utils/testExample'
+import { empty } from './utils/testExample'
 import './index.css'
 
 const logseq = window.logseq
@@ -15,7 +15,7 @@ const logseqEditor = logseq.Editor
 const logseqApp = logseq.App
 
 const isInBrower = process.env.REACT_APP_ENV === 'browser'
-const bootEditor = (input, blockId) => {
+export const bootEditor = (input, blockId) => {
   console.log('[faiz:] === Raw Input: \n', input)
   let tables = parseMarkdownTable(input)
   if (tables?.length === 0) {
@@ -27,7 +27,7 @@ const bootEditor = (input, blockId) => {
   renderApp(input, tables, blockId)
 }
 if (isInBrower) {
-  bootEditor(tableWithTextBeforeAndAfter, 111)
+  bootEditor(empty, 111)
 } else {
   logseq.ready().then(() => {
     // padding-left: var(--ls-left-sidebar-width);
