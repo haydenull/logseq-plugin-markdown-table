@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom'
 import 'antd/dist/antd.css'
 
 import App from './pages/App'
-import { DEFAULT_TABLE } from './utils/contants'
 import parseMarkdownTable from './utils/parseRawInputByMarkdownIt'
 // import { multipleTables, empty, longTables, onlyText, tableWithTextBeforeAndAfter } from './utils/testExample'
 import { empty } from './utils/testExample'
@@ -15,14 +14,9 @@ const logseqEditor = logseq.Editor
 const logseqApp = logseq.App
 
 const isInBrower = process.env.REACT_APP_ENV === 'browser'
-export const bootEditor = (input, blockId) => {
+const bootEditor = (input, blockId) => {
   console.log('[faiz:] === Raw Input: \n', input)
   let tables = parseMarkdownTable(input)
-  if (tables?.length === 0) {
-    console.warn('[faiz:] === No Table Found')
-    input += `${input === '' ? '' : '\n'}${DEFAULT_TABLE}`
-    tables = parseMarkdownTable(input)
-  }
   console.log('[faiz:] === markdownIt parse res', tables)
   renderApp(input, tables, blockId)
 }

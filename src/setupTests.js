@@ -1,0 +1,4 @@
+window.logseq = {
+  App: {},
+  Editor: {},
+}

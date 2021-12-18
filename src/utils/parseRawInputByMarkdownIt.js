@@ -1,15 +1,15 @@
 import MarkdownIt from "markdown-it"
 
-import { tableLineReg } from "./contants"
+import { tableLineReg, DEFAULT_TABLE } from "./contants"
 
 const md = new MarkdownIt()
 
-const parseMarkdownTable = (str) => {
-  const strArr = str.split('\n')
+const parseMarkdownTable = (input) => {
+  const strArr = input.split('\n')
   // token https://github.com/markdown-it/markdown-it/blob/master/lib/token.js
-  const tokenList = md.parse(str, {})
+  const tokenList = md.parse(input, {})
 
-  return tokenList
+  const tables = tokenList
     .filter(token => token?.type === 'table_open')
     .map(token => {
       // map is Sourse map, format [startLine, endLine]
@@ -29,6 +29,14 @@ const parseMarkdownTable = (str) => {
       }
       return [startLine, trueEndLine + 1]
     })
+  
+  if (tables?.length === 0) {
+    console.warn('[faiz:] === No Table Found')
+    input += `${input === '' ? '' : '\n'}${DEFAULT_TABLE}`
+    return parseMarkdownTable(input)
+  }
+
+  return tables
 }
 
 export default parseMarkdownTable
