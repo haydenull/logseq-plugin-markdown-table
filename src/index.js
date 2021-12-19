@@ -6,7 +6,7 @@ import 'antd/dist/antd.css'
 import App from './pages/App'
 import parseMarkdownTable from './utils/parseRawInputByMarkdownIt'
 // import { multipleTables, empty, longTables, onlyText, tableWithTextBeforeAndAfter } from './utils/testExample'
-import { empty } from './utils/testExample'
+import { longTables } from './utils/testExample'
 import './index.css'
 
 const logseq = window.logseq
@@ -21,7 +21,7 @@ const bootEditor = (input, blockId) => {
   renderApp(input, tables, blockId)
 }
 if (isInBrower) {
-  bootEditor(empty, 111)
+  bootEditor(longTables, 111)
 } else {
   logseq.ready().then(() => {
     // padding-left: var(--ls-left-sidebar-width);
