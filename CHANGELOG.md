@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.3.0...v1.4.0) (2022-01-18)
+
+
+### Features
+
+* change logo ([9f22180](https://github.com/haydenull/logseq-plugin-markdown-table/commit/9f221808a7db7de14ff7b5d38c76fc9c5c2886db))
+
 # [1.3.0](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.2.3...v1.3.0) (2021-12-08)
 
 
