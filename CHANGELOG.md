@@ -1,3 +1,11 @@
+# [1.5.0](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.4.0...v1.5.0) (2022-01-19)
+
+
+### Features
+
+* ✨ add tab & shift+tab shortcut ([5d8f265](https://github.com/haydenull/logseq-plugin-markdown-table/commit/5d8f26500780c41a1cb80673e3d7a2569340c5fa))
+* add listen tab ([134a6e2](https://github.com/haydenull/logseq-plugin-markdown-table/commit/134a6e25738a3dcc6287a292914039c21999b247))
+
 # [1.4.0](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.3.0...v1.4.0) (2022-01-18)
 
 
