@@ -1,5 +1,6 @@
 import { Transforms, Editor, Range, Element } from "slate"
 import { createTableNode } from "./util"
+import { get } from 'lodash'
 
 export class TableUtil {
   constructor(editor) {
@@ -126,8 +127,55 @@ export class TableUtil {
       });
       if (tableNode) {
         const [oldTable, path] = tableNode;
-        this.insertCells(oldTable, path, selection, action);
+        if (/^cursor-\w+/.test(action)) {
+          this.moveCursor(oldTable, selection, action)
+        } else {
+          this.insertCells(oldTable, path, selection, action);
+        }
       }
     }
   };
+
+  moveCursor = (tableNode, selection, action = 'cursor-next') => {
+    const { focus } = selection
+    const cursorPosition = { row: focus?.path[1], column: focus?.path[2] }
+
+    // console.log('[faiz:] === tableNode', tableNode)
+    const rowsCount = tableNode.children.length
+    const columnsCount = tableNode.children[0].children.length
+    // console.log('[faiz:] === current cursor state', cursorPosition, rowsCount, columnsCount)
+
+    function transformSelect(editor, _path) {
+      const text = get(tableNode.children, _path.slice(1, 3).map(item => `[${item}].children`).concat(`[${_path[3]}].text`).join(''))
+      const cursor = {
+        path: _path,
+        offset: text.length,
+      }
+      Transforms.select(editor, { anchor: cursor, focus: cursor })
+    }
+
+    if (action === 'cursor-next') {
+      let path = [...focus.path]
+      if (cursorPosition.column < columnsCount - 1) {
+        // 横向移动到下一个
+        path = [0, cursorPosition.row, cursorPosition.column + 1, 0]
+      } else if (cursorPosition.row < rowsCount - 1) {
+        // 处于当前行最后一个, 光标移动到下一行第一个
+        path = [0, cursorPosition.row + 1, 0, 0]
+      }
+      transformSelect(this.editor, path)
+    } else if (action === 'cursor-prev') {
+      let path = [...focus.path]
+      if (cursorPosition.column > 0) {
+        // 横向移动到上一个
+        path = [0, cursorPosition.row, cursorPosition.column - 1, 0]
+      } else if (cursorPosition.row > 0) {
+        // 处于当前行第一个, 光标移动到上一行最后一个
+        path = [0, cursorPosition.row - 1, columnsCount - 1, 0]
+      }
+      transformSelect(this.editor, path)
+    }
+
+  }
+
 }

@@ -1,10 +1,11 @@
 import { useState, useMemo, useCallback, useImperativeHandle, forwardRef } from 'react'
 import { createEditor } from 'slate'
-import { Slate, Editable, withReact } from 'slate-react'
+import { Slate, Editable, withReact, ReactEditor } from 'slate-react'
 
 import withTables from '../utils/withTable.js'
 import ToolBar from '../components/ToolBar'
 import { stringToSlateValue } from '../utils/util.js'
+import { TableUtil } from '../utils/table'
 import { DEFAULT_TABLE } from '../utils/contants'
 
 const Element = props => {
@@ -81,16 +82,26 @@ const TableEditor = ({ content = DEFAULT_TABLE, className = '' }, ref) => {
   const [value, setValue] = useState([stringToSlateValue(content)])
   // console.log('[faiz:] === tableEditor format to Slate Editor Node: ', stringToSlateValue(content))
 
+  const editor = useMemo(() => withTables(withReact(createEditor())), [])
+  const tableUtil = useMemo(() => new TableUtil(editor), [editor])
+  const renderElement = useCallback(props => <Element {...props} />, [])
+
   useImperativeHandle(
     ref,
     () => ({
       getEditorValue: () => value,
-      onKeyup: (code) => console.log(code)
+      onKeydown: (code) => {
+        const isFocused = ReactEditor.isFocused(editor)
+        if (!isFocused) return
+        if (code === 'Tab') {
+          tableUtil.edit('cursor-next')
+        } else if (code === 'ShiftTab') {
+          tableUtil.edit('cursor-prev')
+        }
+      },
     }),
+    [value, editor, tableUtil]
   )
-
-  const editor = useMemo(() => withTables(withReact(createEditor())), [])
-  const renderElement = useCallback(props => <Element {...props} />, [])
 
   return (
     <div className={className}>

@@ -63,11 +63,16 @@ const App = ({ content, tables, blockId }) => {
       return _arr.concat({ type: 'table', str: DEFAULT_TABLE })
     })
   }
-  const onKeyup = useCallback(e => {
-    console.log('[faiz:] === keyup', e)
-    if (e.code === 'Tab') {
+  const onKeydown = useCallback(e => {
+    if (e.code === 'Tab' && e.shiftKey === false) {
+      e.preventDefault()
       Object.keys(tableEditorMapRef.current).forEach(key => {
-        tableEditorMapRef.current?.[key]?.onKeyup('Tab')
+        tableEditorMapRef.current?.[key]?.onKeydown('Tab')
+      })
+    } else if (e.code === 'Tab' && e.shiftKey) {
+      e.preventDefault()
+      Object.keys(tableEditorMapRef.current).forEach(key => {
+        tableEditorMapRef.current?.[key]?.onKeydown('ShiftTab')
       })
     }
   }, [])
@@ -78,11 +83,11 @@ const App = ({ content, tables, blockId }) => {
     console.log('[faiz:] === arrAfterSplitByTable', arr)
   }, [content, tables])
   useEffect(() => {
-    document.addEventListener('keyup', onKeyup)
+    window.addEventListener('keydown', onKeydown)
     return () => {
-      document.removeEventListener('keyup', onKeyup)
+      window.removeEventListener('keydown', onKeydown)
     }
-  }, [onKeyup])
+  }, [onKeydown])
 
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
