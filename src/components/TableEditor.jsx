@@ -85,6 +85,7 @@ const TableEditor = ({ content = DEFAULT_TABLE, className = '' }, ref) => {
     ref,
     () => ({
       getEditorValue: () => value,
+      onKeyup: (code) => console.log(code)
     }),
   )
 
