@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { Button } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 
@@ -63,12 +63,31 @@ const App = ({ content, tables, blockId }) => {
       return _arr.concat({ type: 'table', str: DEFAULT_TABLE })
     })
   }
+  const onKeydown = useCallback(e => {
+    if (e.code === 'Tab' && e.shiftKey === false) {
+      e.preventDefault()
+      Object.keys(tableEditorMapRef.current).forEach(key => {
+        tableEditorMapRef.current?.[key]?.onKeydown('Tab')
+      })
+    } else if (e.code === 'Tab' && e.shiftKey) {
+      e.preventDefault()
+      Object.keys(tableEditorMapRef.current).forEach(key => {
+        tableEditorMapRef.current?.[key]?.onKeydown('ShiftTab')
+      })
+    }
+  }, [])
 
   useEffect(() => {
     const arr = splitStrByTable(content, tables)
     setArrAfterSplitByTable(arr)
     console.log('[faiz:] === arrAfterSplitByTable', arr)
   }, [content, tables])
+  useEffect(() => {
+    window.addEventListener('keydown', onKeydown)
+    return () => {
+      window.removeEventListener('keydown', onKeydown)
+    }
+  }, [onKeydown])
 
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
