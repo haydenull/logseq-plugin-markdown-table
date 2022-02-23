@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.5.0...v1.6.0) (2022-02-23)
+
+
+### Features
+
+* ✨ add slash command "markdown-table-editor" ([f856d39](https://github.com/haydenull/logseq-plugin-markdown-table/commit/f856d39dac0784a32cd43c824d3f49a01a30872d))
+
 # [1.5.0](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.4.0...v1.5.0) (2022-01-19)
 
 
