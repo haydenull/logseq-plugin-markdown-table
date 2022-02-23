@@ -31,7 +31,7 @@ if (isInBrower) {
       }
     `)
     console.log('[faiz:] === markdown-table-editor-plugin loaded')
-    logseqEditor.registerBlockContextMenuItem('markdown-table-editor', (e) => {
+    const commandCallback = (e) => {
       console.log('[faiz:] === woz-markdown-table-editor', e)
       logseqEditor.getBlock(e.uuid).then(block => {
         console.log('[faiz:] === block', block)
@@ -62,7 +62,9 @@ if (isInBrower) {
         // window.logseq.App.showMsg('Sorry, block content format to markdown table error', 'warning')
         // console.log('[faiz:] === block content format to markdown table error')
       })
-    })
+    }
+    logseqEditor.registerBlockContextMenuItem('markdown-table-editor', commandCallback)
+    logseqEditor.registerSlashCommand('markdown-table-editor', commandCallback)
 
     logseq.on('ui:visible:changed', (e) => {
       if (!e.visible) {
