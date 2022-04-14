@@ -2,7 +2,8 @@ import { DEFAULT_TABLE } from './contants'
 
 export const stringToSlateValue = (str = '') => {
   str = str || DEFAULT_TABLE
-  const _arr = str.trim().split('\n').filter(Boolean)
+  // 将 [:br] 转为换行符
+  const _arr = str.trim().split('\n').filter(Boolean).map(_str => _str.replaceAll('[:br]', '\n'))
   const contentArr = [_arr[0]].concat(_arr.slice(2))
   const res = contentArr.map(rowStr => {
     const rowArr = rowStr.trim().split('|')
@@ -14,7 +15,8 @@ export const stringToSlateValue = (str = '') => {
 export const slateValueToString = (slateVal) => {
   let rowStrs = Array.from(slateVal.children, (row) => {
     const cells = Array.from(row.children, (cell) => {
-      return cell.children[0].text
+      // 将换行符替换为 [:br]
+      return cell.children[0].text?.replaceAll('\n', '[:br]')
     }).join('|')
     return `|${cells}|`
   })
