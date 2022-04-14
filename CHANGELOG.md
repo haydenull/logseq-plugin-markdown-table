@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.6.0...v1.7.0) (2022-04-14)
+
+
+### Features
+
+* ✨ Supports break line ([88df36c](https://github.com/haydenull/logseq-plugin-markdown-table/commit/88df36c38fd422d6be054cf2b6f62d4e8560c2e6))
+
 # [1.6.0](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.5.0...v1.6.0) (2022-02-23)
 
 
