@@ -86,6 +86,14 @@ const TableEditor = ({ content = DEFAULT_TABLE, className = '' }, ref) => {
   const tableUtil = useMemo(() => new TableUtil(editor), [editor])
   const renderElement = useCallback(props => <Element {...props} />, [])
 
+  const onKeyDown = event => {
+    // https://docs.slatejs.org/libraries/slate-react#editable
+    if (event.key === 'Enter' && event.shiftKey) {
+      editor.insertText('\n')
+      return false
+    }
+  }
+
   useImperativeHandle(
     ref,
     () => ({
@@ -114,6 +122,7 @@ const TableEditor = ({ content = DEFAULT_TABLE, className = '' }, ref) => {
         <Editable
           placeholder='Write something'
           renderElement={renderElement}
+          onKeyDown={onKeyDown}
         />
       </Slate>
     </div>
