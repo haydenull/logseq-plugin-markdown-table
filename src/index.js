@@ -13,14 +13,14 @@ const logseq = window.logseq
 const logseqEditor = logseq.Editor
 const logseqApp = logseq.App
 
-const isInBrower = process.env.REACT_APP_ENV === 'browser'
+const isInBrowser = process.env.REACT_APP_ENV === 'browser'
 const bootEditor = (input, blockId) => {
   console.log('[faiz:] === Raw Input: \n', input)
   let tables = parseMarkdownTable(input)
   console.log('[faiz:] === markdownIt parse res', tables)
   renderApp(input, tables, blockId)
 }
-if (isInBrower) {
+if (isInBrowser) {
   bootEditor(longTables, 111)
 } else {
   logseq.ready().then(() => {
@@ -81,5 +81,5 @@ function renderApp(content, tables, blockId) {
     </React.StrictMode>,
     document.getElementById('root')
   )
-  if (!isInBrower) logseq.showMainUI()
+  if (!isInBrowser) logseq.showMainUI()
 }

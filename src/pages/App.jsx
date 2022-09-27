@@ -11,7 +11,7 @@ const logseq = window.logseq
 const logseqApp = logseq.App
 const logseqEditor = logseq.Editor
 
-const isInBrower = process.env.REACT_APP_ENV === 'browser'
+const isInBrowser = process.env.REACT_APP_ENV === 'browser'
 
 const App = ({ content, tables, blockId }) => {
 
@@ -26,7 +26,7 @@ const App = ({ content, tables, blockId }) => {
   }
 
   const onClickConfirm = () => {
-    if (!blockId && !isInBrower) return logseqApp.showMsg('uuid error')
+    if (!blockId && !isInBrowser) return logseqApp.showMsg('uuid error')
     const markdownContent = arrAfterSplitByTable.map((node, index) => {
       if (node.type === 'table') {
         const slateVal = tableEditorMapRef.current?.[index]?.getEditorValue()?.[0]
@@ -35,7 +35,7 @@ const App = ({ content, tables, blockId }) => {
       }
       return node.str
     }).join('\n')
-    if (isInBrower) return console.log('[faiz:] === save content:\n', markdownContent, '\nblockId:', blockId)
+    if (isInBrowser) return console.log('[faiz:] === save content:\n', markdownContent, '\nblockId:', blockId)
 
     logseqEditor.updateBlock(blockId, markdownContent)
       .then(() => {
