@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.7.0...v1.7.1) (2023-05-08)
+
+
+### Bug Fixes
+
+* :bug: specify sematic-relaease version ([034ff4c](https://github.com/haydenull/logseq-plugin-markdown-table/commit/034ff4c368d0a01f6249fe7537557bfd6430cb0e))
+
 # [1.7.0](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.6.0...v1.7.0) (2022-04-14)
 
 
