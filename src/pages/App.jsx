@@ -6,6 +6,7 @@ import TableEditor from '../components/TableEditor'
 import { slateValueToString } from '../utils/util'
 import { tableLineReg, DEFAULT_TABLE } from '../utils/contants'
 import './App.css'
+import { useTranslation } from 'react-i18next'
 
 const logseq = window.logseq
 const logseqApp = logseq.App
@@ -14,6 +15,7 @@ const logseqEditor = logseq.Editor
 const isInBrowser = process.env.REACT_APP_ENV === 'browser'
 
 const App = ({ content, tables, blockId }) => {
+  const { t } = useTranslation()
 
   const tableEditorMapRef = useRef({})
   const [arrAfterSplitByTable, setArrAfterSplitByTable] = useState([])
@@ -26,7 +28,7 @@ const App = ({ content, tables, blockId }) => {
   }
 
   const onClickConfirm = () => {
-    if (!blockId && !isInBrowser) return logseqApp.showMsg('uuid error')
+    if (!blockId && !isInBrowser) return logseqApp.UI.showMsg(t('uuid error'))
     const markdownContent = arrAfterSplitByTable.map((node, index) => {
       if (node.type === 'table') {
         const slateVal = tableEditorMapRef.current?.[index]?.getEditorValue()?.[0]
@@ -39,11 +41,11 @@ const App = ({ content, tables, blockId }) => {
 
     logseqEditor.updateBlock(blockId, markdownContent)
       .then(() => {
-        logseqApp.showMsg('markdown table overwrite success')
+        logseqApp.UI.showMsg(t('markdown table overwrite success'))
         logseq.hideMainUI()
       })
       .catch(err => {
-        logseqApp.showMsg('markdown table overwrite error', 'warning')
+        logseqApp.UI.showMsg(t('markdown table overwrite error'), 'warning')
         console.log('[faiz:] === onClickConfirm error', err)
       })
   }
@@ -92,21 +94,21 @@ const App = ({ content, tables, blockId }) => {
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
       <div className="w-screen h-screen absolute" style={{ background: 'rgba(0, 0, 0, .3)', zIndex: -1 }} onClick={onClickCancel}></div>
-      <div className="w-2/3 overflow-y-auto" style={{ maxHeight: '80%'}}>
+      <div className="w-2/3 overflow-y-auto" style={{ maxHeight: '80%' }}>
         <div className="mt-2 flex flex-col">
           {
             arrAfterSplitByTable?.map((node, index) => {
               return node?.type === 'table'
-              ? (<TableEditor className="my-2" content={node?.str} key={index} ref={dom => setTableEditorRef(index, dom)} />)
-              : (<div className="bg-gray-400 text-gray-300 my-3 rounded px-1 py-2" key={index} style={{whiteSpace: 'pre-line'}}>{node.str}</div>)
+                ? (<TableEditor className="my-2" content={node?.str} key={index} ref={dom => setTableEditorRef(index, dom)} />)
+                : (<div className="bg-gray-400 text-gray-300 my-3 rounded px-1 py-2" key={index} style={{ whiteSpace: 'pre-line' }}>{node.str}</div>)
             })
           }
         </div>
       </div>
-      <Button ghost className="rounded mt-2 flex items-center" icon={<PlusOutlined />} onClick={onClickAdd}>Add New Table</Button>
+      <Button ghost className="rounded mt-2 flex items-center" icon={<PlusOutlined />} onClick={onClickAdd}>{t('Add New Table')}</Button>
       <div className="flex w-2/3 flex-row justify-end mt-4">
-        <Button className="mr-1 rounded" onClick={onClickCancel}>Cancel</Button>
-        <Button className="rounded" type="primary" onClick={onClickConfirm}>Confirm</Button>
+        <Button className="mr-1 rounded" onClick={onClickCancel}>{t('Cancel')}</Button>
+        <Button className="rounded" type="primary" onClick={onClickConfirm}>{t('Confirm')}</Button>
       </div>
     </div>
   )

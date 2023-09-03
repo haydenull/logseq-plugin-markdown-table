@@ -1,0 +1,16 @@
+{
+  "Markdown Table Editor": "Markdown Table Editor",
+  "Markdown table editor only support markdown": "Markdown table editor only support markdown format",
+  "Add New Table": "Add New Table",
+  "Cancel": "Cancel",
+  "Confirm": "Confirm",
+  "insert row above": "insert row above",
+  "insert row below": "insert row below",
+  "delete row": "delete row",
+  "insert column before": "insert column before",
+  "insert column after": "insert column after",
+  "delete column": "delete column",
+  "uuid error": "uuid error",
+  "markdown table overwrite success": "markdown table overwrite success",
+  "markdown table overwrite error": "markdown table overwrite error"
+}

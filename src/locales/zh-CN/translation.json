@@ -1,0 +1,16 @@
+{
+  "Markdown Table Editor": "Markdown 表格编辑器",
+  "Markdown table editor only support markdown": "Markdown 表格编辑器仅支持 Markdown 格式",
+  "Add New Table": "添加新表格",
+  "Cancel": "取消",
+  "Confirm": "确认",
+  "insert row above": "在上方插入新行",
+  "insert row below": "在下方插入新行",
+  "delete row": "删除行",
+  "insert column before": "在左侧插入新列",
+  "insert column after": "在右侧插入新列",
+  "delete column": "删除列",
+  "uuid error": "uuid 错误",
+  "markdown table overwrite success": "markdown 表格覆盖成功",
+  "markdown table overwrite error": "markdown 表格覆盖失败"
+}
