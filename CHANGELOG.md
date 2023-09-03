@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.7.1...v1.8.0) (2023-09-03)
+
+
+### Features
+
+* :sparkles: add Chinese translations ([704c9b9](https://github.com/haydenull/logseq-plugin-markdown-table/commit/704c9b9dfe9e5ea4f317a99d3d8b554e567f8de3))
+
 ## [1.7.1](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.7.0...v1.7.1) (2023-05-08)
 
 
