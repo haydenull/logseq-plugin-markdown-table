@@ -9,7 +9,6 @@ import './App.css'
 import { useTranslation } from 'react-i18next'
 
 const logseq = window.logseq
-const logseqApp = logseq.App
 const logseqEditor = logseq.Editor
 
 const isInBrowser = process.env.REACT_APP_ENV === 'browser'
@@ -28,7 +27,7 @@ const App = ({ content, tables, blockId }) => {
   }
 
   const onClickConfirm = () => {
-    if (!blockId && !isInBrowser) return logseqApp.UI.showMsg(t('uuid error'))
+    if (!blockId && !isInBrowser) return logseq.UI.showMsg(t('uuid error'))
     const markdownContent = arrAfterSplitByTable.map((node, index) => {
       if (node.type === 'table') {
         const slateVal = tableEditorMapRef.current?.[index]?.getEditorValue()?.[0]
@@ -41,11 +40,11 @@ const App = ({ content, tables, blockId }) => {
 
     logseqEditor.updateBlock(blockId, markdownContent)
       .then(() => {
-        logseqApp.UI.showMsg(t('markdown table overwrite success'))
         logseq.hideMainUI()
+        logseq.UI.showMsg(t('markdown table overwrite success'))
       })
       .catch(err => {
-        logseqApp.UI.showMsg(t('markdown table overwrite error'), 'warning')
+        logseq.UI.showMsg(t('markdown table overwrite error'), 'warning')
         console.log('[faiz:] === onClickConfirm error', err)
       })
   }

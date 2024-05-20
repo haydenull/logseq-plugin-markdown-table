@@ -18,7 +18,7 @@
     "@ant-design/icons": "^4.7.0",
     "@babel/core": "7.12.3",
     "@craco/craco": "^6.3.0",
-    "@logseq/libs": "^0.0.15",
+    "@logseq/libs": "^0.0.17",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
     "@svgr/webpack": "5.5.0",
     "@tailwindcss/postcss7-compat": "^2.2.17",

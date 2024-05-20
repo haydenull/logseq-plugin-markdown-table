@@ -12,7 +12,6 @@ import './index.css'
 
 const logseq = window.logseq
 const logseqEditor = logseq.Editor
-const logseqApp = logseq.App
 
 const isInBrowser = process.env.REACT_APP_ENV === 'browser'
 const bootEditor = (input, blockId) => {
@@ -40,7 +39,7 @@ if (isInBrowser) {
           console.log('[faiz:] === block', block)
           const { format, content } = block
           // only support markdown
-          if (format !== 'markdown') return logseqApp.UI.showMsg(i18n.t('Markdown table editor only support markdown'), 'warning')
+          if (format !== 'markdown') return logseq.UI.showMsg(i18n.t('Markdown table editor only support markdown'), 'warning')
 
           bootEditor(content, e.uuid)
 
