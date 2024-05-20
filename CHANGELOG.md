@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.8.0...v1.8.1) (2024-05-20)
+
+
+### Bug Fixes
+
+* :bug: confirm button does not close the editor ([9074402](https://github.com/haydenull/logseq-plugin-markdown-table/commit/907440253f0ceffe4145f3152a9341ea94581f97)), closes [#25](https://github.com/haydenull/logseq-plugin-markdown-table/issues/25)
+
 # [1.8.0](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.7.1...v1.8.0) (2023-09-03)
 
 
