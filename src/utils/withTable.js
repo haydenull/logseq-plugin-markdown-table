@@ -1,7 +1,7 @@
-import { Editor, Range, Point, Element } from 'slate'
+import { Editor, Range, Point, Element, Transforms, Node } from 'slate'
 
 const withTable = (editor) => {
-  const { deleteBackward, deleteForward, insertBreak } = editor
+  const { deleteBackward, deleteForward, insertBreak, insertFragment } = editor
 
   editor.deleteBackward = unit => {
     const { selection } = editor;
@@ -84,6 +84,23 @@ const withTable = (editor) => {
 
     insertBreak()
   }
+
+  editor.insertFragment = (fragment) => {
+    const inTable = Editor.above(editor, {
+      match: n => !Editor.isEditor(n) && Element.isElement(n) && n.type === 'table-cell',
+    })
+
+    if (inTable) {
+      // In a table, we need to strip the attributes of the node,
+      // and just keep the text. Otherwise pasting doesn't work properly
+      const text = fragment.map(node => Node.string(node))
+      Transforms.insertText(editor, text)
+    } else {
+      // If we're not in a table, use the default behavior
+      insertFragment(fragment)
+    }
+  }
+
   return editor;
 }
 

@@ -12,7 +12,7 @@ const parseMarkdownTable = (input) => {
   const tables = tokenList
     .filter(token => token?.type === 'table_open')
     .map(token => {
-      // map is Sourse map, format [startLine, endLine]
+      // map is Source map, format [startLine, endLine]
       let [startLine , endLine] = token.map
       const endLineStr = strArr[endLine]
 

@@ -83,6 +83,16 @@ const App = ({ content, tables, blockId }) => {
       Object.keys(tableEditorMapRef.current).forEach(key => {
         tableEditorMapRef.current?.[key]?.onKeydown('ShiftTab')
       })
+    } else if (e.code === 'ArrowUp') {
+      e.preventDefault()
+      Object.keys(tableEditorMapRef.current).forEach(key => {
+        tableEditorMapRef.current?.[key]?.onKeydown('ArrowUp')
+      })
+    } else if (e.code === 'ArrowDown') {
+      e.preventDefault()
+      Object.keys(tableEditorMapRef.current).forEach(key => {
+        tableEditorMapRef.current?.[key]?.onKeydown('ArrowDown')
+      })
     }
   }, [onClickConfirm])
 

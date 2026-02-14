@@ -1,0 +1,16 @@
+{
+  "Markdown Table Editor": "Markdown Tabellen-Editor",
+  "Markdown table editor only support markdown": "Tabellen-Editor unterstützt nur Markdown",
+  "Add New Table": "Neue Tabelle hinzufügen",
+  "Cancel": "Abbrechen",
+  "Confirm": "Bestätigen",
+  "insert row above": "Zeile oberhalb einfügen",
+  "insert row below": "Zeile unterhalb einfügen",
+  "delete row": "Zeile löschen",
+  "insert column before": "Spalte vorher einfügen",
+  "insert column after": "Spalte nachfolgend einfügen",
+  "delete column": "Spalte löschen",
+  "uuid error": "UUID Fehler",
+  "markdown table overwrite success": "Tabelle wurde erfolgreich überschrieben",
+  "markdown table overwrite error": "Fehler beim Überschreiben der Tabelle"
+}

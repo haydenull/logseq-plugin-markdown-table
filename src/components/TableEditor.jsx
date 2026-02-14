@@ -15,6 +15,8 @@ const Element = props => {
       return (<table>
         <tbody {...attributes}>{children}</tbody>
       </table>)
+    case 'table-header':
+      return <th {...attributes}>{children}</th>
     case 'table-row':
       return <tr {...attributes}>{children}</tr>
     case 'table-cell':
@@ -25,62 +27,7 @@ const Element = props => {
 }
 
 const TableEditor = ({ content = DEFAULT_TABLE, className = '' }, ref) => {
-  // const [value, setValue] = useState([
-  //   // {
-  //   //   type: 'paragaph',
-  //   //   children: [{ text: 'First line of text in Slate JS. ' }],
-  //   // },
-    // {
-    //   type: 'table',
-    //   children: [
-    //     {
-    //       type: 'table-row',
-    //       children: [
-    //         {
-    //           type: 'table-cell',
-    //           children: [
-    //             {
-    //               text: 'title1',
-    //             }
-    //           ]
-    //         },
-    //         {
-    //           type: 'table-cell',
-    //           children: [
-    //             {
-    //               text: 'title2',
-    //             }
-    //           ]
-    //         },
-    //       ]
-    //     },
-    //     {
-    //       type: 'table-row',
-    //       children: [
-    //         {
-    //           type: 'table-cell',
-    //           children: [
-    //             {
-    //               text: 'content1',
-    //             }
-    //           ]
-    //         },
-    //         {
-    //           type: 'table-cell',
-    //           children: [
-    //             {
-    //               text: 'content2',
-    //             }
-    //           ]
-    //         },
-    //       ]
-    //     },
-    //   ]
-    // }
-  // ])
-  // console.log('[faiz:] === tableEditor input: \n', content)
   const [value, setValue] = useState([stringToSlateValue(content)])
-  // console.log('[faiz:] === tableEditor format to Slate Editor Node: ', stringToSlateValue(content))
 
   const editor = useMemo(() => withTables(withReact(createEditor())), [])
   const tableUtil = useMemo(() => new TableUtil(editor), [editor])
@@ -99,12 +46,22 @@ const TableEditor = ({ content = DEFAULT_TABLE, className = '' }, ref) => {
     () => ({
       getEditorValue: () => value,
       onKeydown: (code) => {
-        const isFocused = ReactEditor.isFocused(editor)
-        if (!isFocused) return
-        if (code === 'Tab') {
-          tableUtil.edit('cursor-next')
-        } else if (code === 'ShiftTab') {
-          tableUtil.edit('cursor-prev')
+        if (!ReactEditor.isFocused(editor))
+          return
+
+        switch (code) {
+          case 'Tab':
+            tableUtil.edit('cursor-next')
+            break
+          case 'ShiftTab':
+            tableUtil.edit('cursor-prev')
+            break
+          case 'ArrowUp':
+            tableUtil.edit('cursor-up')
+            break
+          case 'ArrowDown':
+            tableUtil.edit('cursor-down')
+            break
         }
       },
     }),

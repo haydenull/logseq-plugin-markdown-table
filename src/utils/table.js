@@ -155,27 +155,28 @@ export class TableUtil {
     }
 
     if (action === 'cursor-next') {
-      let path = [...focus.path]
-      if (cursorPosition.column < columnsCount - 1) {
-        // 横向移动到下一个
-        path = [0, cursorPosition.row, cursorPosition.column + 1, 0]
-      } else if (cursorPosition.row < rowsCount - 1) {
-        // 处于当前行最后一个, 光标移动到下一行第一个
-        path = [0, cursorPosition.row + 1, 0, 0]
-      }
-      transformSelect(this.editor, path)
+      const nextColumn = (cursorPosition.column + 1) % columnsCount;
+      const nextRow = nextColumn === 0 ? (cursorPosition.row + 1) % rowsCount : cursorPosition.row;
+      const path = [0, nextRow, nextColumn, 0];
+      transformSelect(this.editor, path);
     } else if (action === 'cursor-prev') {
-      let path = [...focus.path]
-      if (cursorPosition.column > 0) {
-        // 横向移动到上一个
-        path = [0, cursorPosition.row, cursorPosition.column - 1, 0]
-      } else if (cursorPosition.row > 0) {
-        // 处于当前行第一个, 光标移动到上一行最后一个
-        path = [0, cursorPosition.row - 1, columnsCount - 1, 0]
+      const prevColumn = (cursorPosition.column - 1 + columnsCount) % columnsCount;
+      const prevRow = cursorPosition.column === 0 ? (cursorPosition.row - 1 + rowsCount) % rowsCount : cursorPosition.row;
+      const path = [0, prevRow, prevColumn, 0];
+      transformSelect(this.editor, path);
+    } else if (action === 'cursor-up') {
+      if (cursorPosition.row > 0) {
+        const prevRow = cursorPosition.row - 1;
+        const path = [0, prevRow, cursorPosition.column, 0];
+        transformSelect(this.editor, path);
       }
-      transformSelect(this.editor, path)
+    } else if (action === 'cursor-down') {
+      if (cursorPosition.row < rowsCount - 1) {
+        const nextRow = cursorPosition.row + 1;
+        const path = [0, nextRow, cursorPosition.column, 0];
+        transformSelect(this.editor, path);
+      }
     }
-
   }
 
 }
