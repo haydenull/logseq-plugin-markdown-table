@@ -1,7 +1,7 @@
 import { Editor, Range, Point, Element } from 'slate'
 
 const withTable = (editor) => {
-  const { deleteBackward, deleteForward, insertBreak } = editor
+  const { deleteBackward, deleteForward, insertBreak, insertData } = editor
 
   editor.deleteBackward = unit => {
     const { selection } = editor;
@@ -83,6 +83,30 @@ const withTable = (editor) => {
     }
 
     insertBreak()
+  }
+
+  editor.insertData = data => {
+    const { selection } = editor
+    if (selection) {
+      const [table] = Editor.nodes(editor, {
+        match: n =>
+          !Editor.isEditor(n) &&
+          Element.isElement(n) &&
+          n.type === 'table',
+      })
+
+      // inside a table paste plain text only: a slate fragment carries its own
+      // table/row/cell nodes, and the default line splitting would split the cell
+      if (table) {
+        const text = data.getData('text/plain')
+          .replace(/\r\n|\r/g, '\n')
+          .replace(/^\n+|\n+$/g, '')
+        if (text) editor.insertText(text)
+        return
+      }
+    }
+
+    insertData(data)
   }
   return editor;
 }

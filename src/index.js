@@ -52,11 +52,12 @@ if (isInBrowser) {
         console.log('[faiz:] === woz-markdown-table-editor', e)
         logseqEditor.getBlock(e.uuid).then(block => {
           console.log('[faiz:] === block', block)
-          const { format, content } = block
+          const { format, content, title } = block
           // only support markdown
-          if (format !== 'markdown') return logseq.UI.showMsg(i18n.t('Markdown table editor only support markdown'), 'warning')
+          // DB graphs have no :block/format (always markdown) and store the text in title instead of content
+          if (format && format !== 'markdown') return logseq.UI.showMsg(i18n.t('Markdown table editor only support markdown'), 'warning')
 
-          bootEditor(content, e.uuid)
+          bootEditor(content ?? title ?? '', e.uuid)
 
           // for empty block
           // todo: fix

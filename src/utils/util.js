@@ -1,3 +1,5 @@
+import { Node } from 'slate'
+
 import { DEFAULT_TABLE } from './contants'
 
 export const stringToSlateValue = (str = '') => {
@@ -16,7 +18,7 @@ export const slateValueToString = (slateVal) => {
   let rowStrs = Array.from(slateVal.children, (row) => {
     const cells = Array.from(row.children, (cell) => {
       // 将换行符替换为 [:br]
-      return cell.children[0].text?.replaceAll('\n', '[:br]')
+      return Node.string(cell).replaceAll('\n', '[:br]')
     }).join('|')
     return `|${cells}|`
   })
